@@ -1,73 +1,30 @@
-<!-- <head>
-  <title>lyrics</title>
-</head>
-
-<body>
-  <h1>Welcome to Meteor!</h1>
-
-  {{> hello}}
-</body>
-
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
-</template> -->
-
-
 <head>
-  <title>MDL Test</title>
+  <title>Lyrics</title>
   <meta name="viewport" content="width=device-width, user-scalable=no">
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
-{{> main}}
+{{> lyrics}}
 </body>
 
-<template name="main">
-<!-- The drawer is always open in large screens. The header is always shown,
-  even in small screens. -->
-<div class="demo-layout">
-  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
-              mdl-layout--fixed-header">
-    <main class="mdl-layout__content">
-      <div class="page-content"><!-- Your content goes here -->
-        <div class="mdl-grid">
-          <div class="mdl-cell mdl-cell--12-col">
-
-            <div class="demo-card-wide mdl-card mdl-shadow--2dp">
-              <div class="mdl-card_title">
-                <h2 class="mdl-card_title-text">Track info</h2>
-              </div>
-              <div class="mdl-card__actions mdl-card--border">
-                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                  Sponsored
-                </a>
-              </div>
-              <div class="mdl-card__supporting-text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Mauris sagittis pellentesque lacus eleifend lacinia...
-              </div>
-              <div class="mdl-card__actions mdl-card--border">
-                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                  Lyrics data
-                </a>
-              </div>
-              <div class="mdl-card__supporting-text">
-                Previous Line
-                Current Line
-                Next Line
-              </div>
-              <div class="mdl-card__menu">
-                <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                  <i class="material-icons">share</i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+<template name="lyrics">
+  <div class="wrapper">
+      <div id="player">
+          <audio controls id="audio" src="./content/songs/na_ge.mp3">!audio not supported :(</audio>
       </div>
-    </main>
+      <div id="playlist">
+          <ol>
+          </ol>
+          <div class="info">
+              <div class="bg" id="bg_dark" title="use color for background"></div>
+              <div class="bg" id="bg_pic" title="use image for background"></div>
+              <small> view on <a target="_blank" href="https://github.com/wayou/selected/">GitHub</a></small>
+          </div>
+      </div>
+      <div id="lyricWrapper">
+          <div id="lyricContainer">
+          </div>
+      </div>
   </div>
-</div>
 </template>
