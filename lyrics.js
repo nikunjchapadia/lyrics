@@ -67,14 +67,12 @@ if (Meteor.isClient) {
           this.lyric = null;
           this.lyricContainer.textContent = 'loading...';
           this.lyricStyle = Math.floor(Math.random() * 4);
-          this.audio.oncanplay = function() {
-
-              //that.getLyric(that.audio.src.replace('.mp3', '.txt'));
+          this.audio.oncanplay = function() {              
+              that.getLyric(that.audio.src.replace('.mp3', '-spanish.txt'));
               this.play();
           };
           //sync the lyric
           this.audio.ontimeupdate = function(e) {
-            //debugger;
               if (!that.lyric) return;
               for (var i = 0, l = that.lyric.length; i < l; i++) {
                   if (this.currentTime > that.lyric[i][0] - 0.50 /*preload the lyric by 0.50s*/ ) {
@@ -131,6 +129,7 @@ if (Meteor.isClient) {
       },
       parseLyric: function(text) {
           //get each line from the text
+
           var lines = text.split('\n'),
               //this regex mathes the time [00.12.78]
               pattern = /\[\d{2}:\d{2}.\d{2}\]/g,
@@ -143,10 +142,14 @@ if (Meteor.isClient) {
           while (!pattern.test(lines[0])) {
               lines = lines.slice(1);
           };
+
           //remove the last empty item
           lines[lines.length - 1].length === 0 && lines.pop();
           //display all content on the page
+          debugger;
           lines.forEach(function(v, i, a) {
+            console.log('v: ' + v);
+            console.log('v.match(pattern): ' + v.match(pattern));
               var time = v.match(pattern),
                   value = v.replace(pattern, '');
               time.forEach(function(v1, i1, a1) {
@@ -180,15 +183,17 @@ if (Meteor.isClient) {
           var offset = 0;
           try {
               // Pattern matches [offset:1000]
-              var offsetPattern = /\[offset:\-?\+?\d+\]/g,
+              var offsetPattern = /\[offset:\-?\+?\d+\]/g;
+
+              if(text.match(offsetPattern)) {
                   // Get only the first match.
-                  offset_line = text.match(offsetPattern)[0],
+                  var offset_line = text.match(offsetPattern)[0],
                   // Get the second part of the offset.
                   offset_str = offset_line.split(':')[1];
-              // Convert it to Int.
-              offset = parseInt(offset_str);
+                  // Convert it to Int.
+                  offset = parseInt(offset_str);
+                }
           } catch (err) {
-              //alert("offset error: "+err.message);
               offset = 0;
           }
           return offset;
