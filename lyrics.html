@@ -111,6 +111,12 @@
                 <div id="lyricContainer">
                 </div>
             </div>
+            <div style="float: left">
+                <label for="switch1" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+                    <input type="checkbox" id="switch1" class="mdl-switch__input">
+                    <span class="mdl-switch__label">English/Spanish</span>
+                </label>
+            </div>
         </div>
 
         <!-- Player Container-->
@@ -141,19 +147,16 @@
                     <div class='controls'>
                         <button id='prev' onclick="selected.playNext()"
                                 class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                            <i class="zmdi zmdi-skip-previous"></i>
+                            <img id="previousImage" src="images/back.png" />
                         </button>
                         <button id='play' onclick="selected.play()"
                                 class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                            <i class="zmdi zmdi-play"></i>
-                        </button>
-                        <button id='stop' onclick="selected.pause()"
-                                class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                            <i class="zmdi zmdi-stop"></i>
+                            <img id="playImage" src="images/play.png" />
+                            <img id="pauseImage" src="images/pause.png" />
                         </button>
                         <button id='next' onclick="selected.playNext()"
                                 class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                            <i class="zmdi zmdi-skip-next"></i>
+                            <img id="nextImage" src="images/skip.png" />
                         </button>
                     </div>
                 </div>

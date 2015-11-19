@@ -189,7 +189,7 @@ html, body {
 
 #lyricContainer p {
   margin-bottom: 5px;
-  color: #999999;
+  color: #CCCCCC;
 }
 
 #lyricContainer p.current {
@@ -197,18 +197,45 @@ html, body {
   font-size: 16px;
 }
 
-/*.demo-image.mdl-card {
-    width: 150px;
-    height: 100px;
-    background: url('../assets/demos/image_card.jpg') center / cover;
+.mdl-button--fab.mdl-button--colored,
+.mdl-button--fab.mdl-button--colored:hover {
+  background-color: transparent;
 }
-.demo-image > .mdl-card__actions {
-    height: 32px;
-    padding: 8px;
-    background: rgba(0, 0, 0, 0.2);
+
+.mdl-button--fab {
+  border-radius: 0%;
+  box-shadow: none;
 }
-.demo-image__filename {
-    color: #fff;
-    font-size: 14px;
-    font-weight: 500;
-}*/
+
+#next {
+  width: 74px;
+}
+
+#next img,
+#prev img {
+  width: 37px;
+  height: 28px;
+}
+
+#play {
+  margin-left: 80px;
+  margin-right: 30px;
+}
+
+#play img {
+  width: 27px;
+  height: 31px;
+}
+
+#play.paused #pauseImage {
+  display: inline;
+}
+
+#play.paused #playImage {
+  display: none;
+}
+
+#pauseImage {
+  display: none;
+}
+

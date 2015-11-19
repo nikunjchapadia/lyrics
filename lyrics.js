@@ -28,9 +28,12 @@ if (Meteor.isClient) {
         this.totalTimeContainer = document.getElementById('totaltime');
         this.sliderCircle = document.getElementById('slider-circle');
         this.adContainer = document.getElementById('ad_container');
+        this.langControl = document.getElementById('switch1');
         this.currentIndex = 0;
         this.lyric = null;
         this.lyricStyle = 0; //random num to specify the different class name for lyric
+        this.lang = "en";
+        this.songs = ['lmfao', 'lmfao', 'lmfao'];
     };
     Selected.prototype = {
         constructor: Selected, //fix the prototype chain
@@ -75,7 +78,15 @@ if (Meteor.isClient) {
                     index = 1;
                 }
             }
+
             this.play(this.song);
+
+            this.langControl.addEventListener('click', function(ln) {
+                if(!ln){
+                    return;
+                }
+                that.lang = ln;
+            });
         },
 
         secondsToString: function (totalSeconds) {
@@ -86,6 +97,18 @@ if (Meteor.isClient) {
         },
 
         play: function (songName) {
+
+
+            if($("#play").hasClass('paused')) {
+                $("#play").removeClass('paused');
+                this.pause();
+                return;
+            } else {
+                $("#play").addClass('paused');
+
+            }
+
+
             console.log("Play song ...");
             var that = this;
 
@@ -98,7 +121,11 @@ if (Meteor.isClient) {
             //this.currentLine.textContent = 'loading...';
             this.lyricStyle = Math.floor(Math.random() * 4);
             this.audio.oncanplay = function () {
-                that.getLyric(songName + '-spanish.txt');
+                console.log("loading lyrics ...", that.lang);
+                if (that.lang != "en") {
+                    that.getLyric(that.audio.src.replace('.mp3', '-spanish.txt'));
+                }
+                that.getLyric(that.song + '-english.lrc');
                 this.play();
             };
             //sync the lyric
@@ -131,19 +158,20 @@ if (Meteor.isClient) {
             };
         },
         playNext: function (that) {
-            var allSongs = this.playlist.children[0].children,
-                nextItem;
-            //reaches the last song of the playlist?
-            if (that.currentIndex === allSongs.length - 1) {
-                //play from start
-                that.currentIndex = 0;
-            } else {
-                //play next index
-                that.currentIndex += 1;
-            }
-            nextItem = allSongs[that.currentIndex].children[0];
-            that.setClass(that.currentIndex);
-            var songName = nextItem.getAttribute('data-name');
+            var songName = "lmfao";
+            //var allSongs = this.playlist.children[0].children,
+            //    nextItem;
+            ////reaches the last song of the playlist?
+            //if (that.currentIndex === allSongs.length - 1) {
+            //    //play from start
+            //    that.currentIndex = 0;
+            //} else {
+            //    //play next index
+            //    that.currentIndex += 1;
+            //}
+            //nextItem = allSongs[that.currentIndex].children[0];
+            //that.setClass(that.currentIndex);
+            //var songName = nextItem.getAttribute('data-name');
             window.location.hash = songName;
             that.play(this.song);
         },
