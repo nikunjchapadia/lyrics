@@ -3,7 +3,6 @@
 }
 .demo-card-wide > .mdl-card__title {
   color: #fff;
-  background: url('../assets/demos/welcome_card.jpg') center / cover;
 }
 .demo-card-wide > .mdl-card__menu {
   color: #fff;
@@ -15,7 +14,7 @@
 
 .demo-card-image.mdl-card {
   width: 400px;
-  height: 256px;
+  height: 100px;
   /*background: url('http://www.getmdl.io/assets/demos/image_card.jpg') center / cover;*/
   background: url('adele.png') center / cover;
 }
@@ -29,6 +28,34 @@
   font-size: 14px;
   font-weight: 500;
 }
+
+.ads_container.mdl-card {
+  width: 400px;
+  height:200px;
+  padding:10px;
+  background: url('ad1.jpg') center / cover;
+}
+
+.demo-card-ads.mdl-card {
+  width: 400px;
+  height:200px;
+  background: url('ad1.jpg') center / cover;
+}
+.demo-card-ads > .mdl-card__actions {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.demo-card-ads > .mdl-card__title {
+  align-items: flex-start;
+}
+.demo-card-ads > .mdl-card__title > h4 {
+  margin-top: 0;
+}
+.demo-card-ads > .mdl-card__actions {
+  display: flex;
+  box-sizing:border-box;
+  align-items: center;
+}
+
 
 .demo-card-player.mdl-card{
   width: 400px;
@@ -80,3 +107,4 @@ body {
   text-align: center;
   color: #3E4EB8
 }
+

@@ -5,6 +5,7 @@ if (Meteor.isClient) {
     window.onload = function () {
         selected = new Selected();
         selected.init();
+
         //new Selected().init();
     };
 
@@ -13,6 +14,7 @@ if (Meteor.isClient) {
         this.lyricContainer = document.getElementById('lyricContainer');
         this.currentLine = document.getElementById('current_line');
         this.playlist = document.getElementById('playlist');
+        this.adContainer = document.getElementById('ad_container');
         this.currentIndex = 0;
         this.lyric = null;
         this.lyricStyle = 0; //random num to specify the different class name for lyric
@@ -50,6 +52,18 @@ if (Meteor.isClient) {
                 }
             }, false);
 
+
+            var index = 1;
+            setInterval(displayAd, 15000);
+            function displayAd(){
+                var ad = 'ads/ad' + index + '.jpg';
+                console.log("ad", ad);
+                that.adContainer.style.backgroundImage = "url(" + ad + ")";
+                index++;
+                if(index == 8){
+                    index = 1;
+                }
+            }
             //this.play(randomSong);
         },
 
@@ -70,7 +84,7 @@ if (Meteor.isClient) {
             };
             //sync the lyric
             this.audio.ontimeupdate = function (e) {
-                console.log("Sync lyrics ....")
+                //console.log("Sync lyrics ....")
                 if (!that.lyric) return;
                 for (var i = 0, l = that.lyric.length; i < l; i++) {
                     /*preload the lyric by 0.50s*/
@@ -78,7 +92,7 @@ if (Meteor.isClient) {
                         //single line display mode
                         that.lyricContainer.textContent = that.lyric[i][1];
                         that.currentLine.textContent = that.lyric[i][1];
-                        console.log(that.lyricContainer.textContent);
+                        //console.log(that.lyricContainer.textContent);
                         //scroll mode
                         //var line = document.getElementById('line-' + i),
                         //    prevLine = document.getElementById('line-' + (i > 0 ? i - 1 : i));
