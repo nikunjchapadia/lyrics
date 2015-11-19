@@ -16,9 +16,12 @@ if (Meteor.isClient) {
         this.totalTimeContainer = document.getElementById('totaltime');
         this.sliderCircle = document.getElementById('slider-circle');
         this.adContainer = document.getElementById('ad_container');
+        this.langControl = document.getElementById('switch1');
         this.currentIndex = 0;
         this.lyric = null;
         this.lyricStyle = 0; //random num to specify the different class name for lyric
+        this.lang = "en";
+        this.songs = ['lmfao', 'lmfao', 'lmfao'];
     };
     Selected.prototype = {
         constructor: Selected, //fix the prototype chain
@@ -64,6 +67,13 @@ if (Meteor.isClient) {
                     index = 1;
                 }
             }
+
+            this.langControl.addEventListener('click', function(ln) {
+                if(!ln){
+                    return;
+                }
+                that.lang = ln;
+            });
             //this.play(randomSong);
         },
 
@@ -84,10 +94,10 @@ if (Meteor.isClient) {
             this.lyric = null;
             //this.lyricContainer.textContent = 'loading...';
             //this.currentLine.textContent = 'loading...';
-            var lang = "en";
             this.lyricStyle = Math.floor(Math.random() * 4);
             this.audio.oncanplay = function () {
-                if (lang != "en") {
+                console.log("loading lyrics ...", that.lang);
+                if (that.lang != "en") {
                     that.getLyric(that.audio.src.replace('.mp3', '-spanish.txt'));
                 }
                 that.getLyric(that.audio.src.replace('.mp3', '-english.lrc'));
@@ -123,19 +133,20 @@ if (Meteor.isClient) {
             };
         },
         playNext: function (that) {
-            var allSongs = this.playlist.children[0].children,
-                nextItem;
-            //reaches the last song of the playlist?
-            if (that.currentIndex === allSongs.length - 1) {
-                //play from start
-                that.currentIndex = 0;
-            } else {
-                //play next index
-                that.currentIndex += 1;
-            }
-            nextItem = allSongs[that.currentIndex].children[0];
-            that.setClass(that.currentIndex);
-            var songName = nextItem.getAttribute('data-name');
+            var songName = "lmfao";
+            //var allSongs = this.playlist.children[0].children,
+            //    nextItem;
+            ////reaches the last song of the playlist?
+            //if (that.currentIndex === allSongs.length - 1) {
+            //    //play from start
+            //    that.currentIndex = 0;
+            //} else {
+            //    //play next index
+            //    that.currentIndex += 1;
+            //}
+            //nextItem = allSongs[that.currentIndex].children[0];
+            //that.setClass(that.currentIndex);
+            //var songName = nextItem.getAttribute('data-name');
             window.location.hash = songName;
             that.play(songName);
         },
@@ -213,12 +224,6 @@ if (Meteor.isClient) {
                 fragment.appendChild(line);
             });
             lyricContainer.appendChild(fragment);
-        },
-        changeLanguage : function(ln){
-            if(!ln){
-                return;
-            }
-            //
         },
         getOffset: function (text) {
             //Returns offset in miliseconds.
