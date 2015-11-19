@@ -1,4 +1,3 @@
-
 Router.route('/', function () { 
     this.render('home', {data: {title: 'Home'}}); 
 });
@@ -15,12 +14,11 @@ Router.route('/play/:_song', function () { 
  });
 
 if (Meteor.isClient) {
-    window.onload = function () {
-        selected = new Selected();
-        selected.init();
-    };
+    //window.onload = function () {
+    //    selected = new Selected();
+    //    selected.init();
+    //};
 
-    var Selected = function () {
     var Selected = function (songName) {
         this.song = songName;
         this.audio = document.getElementById('audio');
@@ -31,7 +29,6 @@ if (Meteor.isClient) {
         this.totalTimeContainer = document.getElementById('totaltime');
         this.sliderCircle = document.getElementById('slider-circle');
         this.adContainer = document.getElementById('ad_container');
-        this.langControl = document.getElementById('switch1');
         this.currentIndex = 0;
         this.lyric = null;
         this.lyricStyle = 0; //random num to specify the different class name for lyric
@@ -81,9 +78,8 @@ if (Meteor.isClient) {
                     index = 1;
                 }
             }
-            this.play(this.song);
+            //this.play(this.song);
         },
-
         secondsToString: function (totalSeconds) {
             var minutes = Math.floor(totalSeconds / 60);
             var seconds = Math.floor(totalSeconds - (minutes * 60));
@@ -91,18 +87,18 @@ if (Meteor.isClient) {
             return minutes + ":" + secStr.substring(secStr.length - 2);
         },
         play: function (songName) {
-            if($("#play").hasClass('paused')) {
-                $("#play").removeClass('paused');
-                this.pause();
-                return;
-            } else {
-                $("#play").addClass('paused');
-            }
+            //if($("#play").hasClass('paused')) {
+            //    $("#play").removeClass('paused');
+            //    this.pause();
+            //    return;
+            //} else {
+            //    $("#play").addClass('paused');
+            //}
             var that = this;
             if (!songName) {
-                songName = 'lmfao-eng.mp3';
+                songName = 'lmfao-eng';
             }
-            this.audio.src = '/'+this.song+'.mp3';
+            this.audio.src = '/' + songName + '.mp3';
             //reset the position of the lyric container
             //this.lyricContainer.style.top = '130px';
             //empty the lyric
@@ -116,9 +112,7 @@ if (Meteor.isClient) {
             };
             //sync the lyric
             this.audio.ontimeupdate = function (e) {
-
                 var totalTime = that.audio.duration;
-
                 var elapsedTime = that.audio.currentTime;
                 //derive our own % so we can draw fractions. progress obj only has whole percents
                 var percentPlayed = (elapsedTime/totalTime)*100;
@@ -142,7 +136,8 @@ if (Meteor.isClient) {
             };
         },
         playNext: function (that) {
-            var songName = "lmfao";
+            console.log("dddddd");
+            var songName = "lmfao-spn";
             //var allSongs = this.playlist.children[0].children,
             //    nextItem;
             ////reaches the last song of the playlist?
@@ -221,6 +216,7 @@ if (Meteor.isClient) {
             var that = this,
                 lyricContainer = this.lyricContainer,
                 fragment = document.createDocumentFragment();
+            lyricContainer.innerHTML = '';
             //clear the lyric container first
             //this.lyricContainer.innerHTML = '';
             lyric.forEach(function (v, i, a) {

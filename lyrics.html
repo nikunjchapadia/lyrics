@@ -11,7 +11,7 @@
 <template name="home">
 
     <div class="mdl-grid">
-        <div class="mdl-cell mdl-cell--2-col" onclick="javascript: Router.go('/play/lmfao')">
+        <div class="mdl-cell mdl-cell--2-col" onclick="javascript: Router.go('/play/lmfao-eng')">
             <div class="demo-image mdl-card mdl-shadow--2dp">
                 <div class="mdl-card__title mdl-card--expand image1"></div>
                 <div class="mdl-card__actions">
@@ -141,16 +141,16 @@
                     <div class='controls'>
                         <button id='prev' onclick="selected.playNext()"
                                 class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                            <img id="previousImage" src="images/back.png" />
+                            <img id="previousImage" src="/images/back.png" />
                         </button>
                         <button id='play' onclick="selected.play()"
                                 class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                            <img id="playImage" src="images/play.png" />
-                            <img id="pauseImage" src="images/pause.png" />
+                            <img id="playImage" src="/images/play.png" />
+                            <img id="pauseImage" src="/images/pause.png" />
                         </button>
                         <button id='next' onclick="selected.playNext()"
                                 class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                            <img id="nextImage" src="images/skip.png" />
+                            <img id="nextImage" src="/images/skip.png" />
                         </button>
                     </div>
                 </div>
