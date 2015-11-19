@@ -21,3 +21,4 @@ insecure                # Allow all DB writes from clients (for prototyping)
 spectrum:material-design-lite
 fourseven:scss
 ixdi:material-design-iconic-font
+iron:router

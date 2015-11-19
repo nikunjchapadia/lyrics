@@ -103,3 +103,34 @@ body {
 html, body {
   font-family: 'Segoe UI', sans-serif;
 }
+
+.image1 {
+  background-image: url('/images/partyrock.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.image2 {
+  background-image: url('/images/roar.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.image3 {
+  background-image: url('/images/roar.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.image4 {
+  background-image: url('/images/roar.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.image5 {
+  background-image: url('/images/roar.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.image6 {
+  background-image: url('/images/roar.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
