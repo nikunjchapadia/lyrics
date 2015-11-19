@@ -9,6 +9,27 @@
 </body>
 
 <template name="lyrics">
+    <!-- old template-->
+    <div class="wrapper">
+        <div id="player">
+            <audio controls id="audio" src="./content/lmfao.mp3">!audio not supported :(</audio>
+        </div>
+        <div id="playlist">
+            <ol>
+            </ol>
+            <div class="info">
+                <div class="bg" id="bg_dark" title="use color for background"></div>
+                <div class="bg" id="bg_pic" title="use image for background"></div>
+                <small> view on <a target="_blank" href="https://github.com/wayou/selected/">GitHub</a></small>
+            </div>
+        </div>
+        <div id="lyricWrapper">
+            <div id="lyricContainer">
+            </div>
+        </div>
+    </div>
+
+    <!-- new template-->
     <div class="track-container">
         <!-- Image card -->
         <div class="demo-card-image mdl-card mdl-shadow--2dp">
@@ -19,68 +40,69 @@
         </div>
         <!-- Event card -->
         <div class="demo-card-event mdl-card mdl-shadow--2dp">
-          <div style="margin-top:10px;">
+            <div style="margin-top:10px;">
 
-              <p class="lyrics-text mdl-typography--caption">Hello, can you hear me?</p>
-          </div>
-          <div style="background:#3E4EB8;
+                <p class="lyrics-text mdl-typography--caption">Hello, can you hear me?</p>
+            </div>
+            <div style="background:#3E4EB8;
                       padding: 10px 10px;
                       border-radius: 25px;
                       margin-left: 10px;
                       margin-right: 10px;">
-              <p class="lyrics-text mdl-typography--title" style="color:white">I'm in California dreaming about who we used to be</p>
-          </div>
-          <div style="margin-top:10px;">
-            <p class="lyrics-text mdl-typography--title">When we were younger and free</p>
-          </div>
+                <p class="lyrics-text mdl-typography--title" style="color:white">I'm in California dreaming about who we
+                    used to be</p>
+            </div>
+            <div style="margin-top:10px;">
+                <p class="lyrics-text mdl-typography--title">When we were younger and free</p>
+            </div>
         </div>
         <div class="demo-card-player mdl-card mdl-shadow--2dp" style="min-height:100px;">
-          <div class="mdl-card__actions mdl-card--border" style="background: #3E4EB8">
-              <div class='background' id='background'>&nbsp;</div>
-              <div >
+            <div class="mdl-card__actions mdl-card--border" style="background: #3E4EB8">
+                <div class='background' id='background'>&nbsp;</div>
+                <div>
 
-                  <audio id='mytrack' src=''>&nbsp;</audio>
+                    <audio id='mytrack' src=''>&nbsp;</audio>
 
-                  <!-- <div id='artwork'>&nbsp;</div> -->
+                    <!-- <div id='artwork'>&nbsp;</div> -->
 
-                  <div id='ui'>
+                    <div id='ui'>
 
-                      <div id="time">
-                          <span id='elapsedtime' style="float:left;">00:00</span>
-                          <span id='totaltime' style="float:right;">00:00</span>
-                      </div>
+                        <div id="time">
+                            <span id='elapsedtime' style="float:left;">00:00</span>
+                            <span id='totaltime' style="float:right;">00:00</span>
+                        </div>
 
-                      <input class="mdl-slider mdl-js-slider"
-                             style="color:pink"
-                             type="range"
-                             min="0" max="100" value="0" tabindex="0">
-                      <!-- <div id='progressbar'>
-                          <div><span id='pointer'>&nbsp;</span></div>
-                      </div> -->
+                        <input class="mdl-slider mdl-js-slider"
+                               style="color:pink"
+                               type="range"
+                               min="0" max="100" value="0" tabindex="0">
+                        <!-- <div id='progressbar'>
+                            <div><span id='pointer'>&nbsp;</span></div>
+                        </div> -->
 
-                      <div class='controls'>
-                        <button id='prev'
-                                class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                          <i class="zmdi zmdi-skip-previous"></i>
-                         </button>
-                        <button id='play'
-                                class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                            <i class="zmdi zmdi-play"></i>
-                        </button>
-                        <button id='stop'
-                                class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                        <div class='controls'>
+                            <button id='prev'
+                                    class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                                <i class="zmdi zmdi-skip-previous"></i>
+                            </button>
+                            <button id='play'
+                                    class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                                <i class="zmdi zmdi-play"></i>
+                            </button>
+                            <button id='stop'
+                                    class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
                                 <i class="zmdi zmdi-stop"></i>
-                        </button>
-                        <button id='next'
-                                class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                            <i class="zmdi zmdi-skip-next"></i>
-                        </button>
-                      </div>
-                  </div>
-                  <!-- UI -->
-              </div>
-              <!-- player -->
-          </div>
+                            </button>
+                            <button id='next'
+                                    class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                                <i class="zmdi zmdi-skip-next"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- UI -->
+                </div>
+                <!-- player -->
+            </div>
         </div>
     </div>
 </template>
