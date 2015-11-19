@@ -143,6 +143,37 @@ html, body {
   font-family: 'Segoe UI', sans-serif;
 }
 
+.image1 {
+  background-image: url('/images/partyrock.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.image2 {
+  background-image: url('/images/roar.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.image3 {
+  background-image: url('/images/roar.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.image4 {
+  background-image: url('/images/roar.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.image5 {
+  background-image: url('/images/roar.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.image6 {
+  background-image: url('/images/roar.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
 #lyricOuterContainer {
   overflow: hidden;
   margin-top: 25px;
@@ -158,11 +189,53 @@ html, body {
 
 #lyricContainer p {
   margin-bottom: 5px;
-  color: #999999;
+  color: #CCCCCC;
 }
 
 #lyricContainer p.current {
   color: #000000;
   font-size: 16px;
+}
+
+.mdl-button--fab.mdl-button--colored,
+.mdl-button--fab.mdl-button--colored:hover {
+  background-color: transparent;
+}
+
+.mdl-button--fab {
+  border-radius: 0%;
+  box-shadow: none;
+}
+
+#next {
+  width: 74px;
+}
+
+#next img,
+#prev img {
+  width: 37px;
+  height: 28px;
+}
+
+#play {
+  margin-left: 80px;
+  margin-right: 30px;
+}
+
+#play img {
+  width: 27px;
+  height: 31px;
+}
+
+#play.paused #pauseImage {
+  display: inline;
+}
+
+#play.paused #playImage {
+  display: none;
+}
+
+#pauseImage {
+  display: none;
 }
 

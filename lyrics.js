@@ -1,3 +1,19 @@
+
+Router.route('/', function () { 
+    this.render('home', {data: {title: 'Home'}}); 
+});
+
+Router.route('/play/:_song', function () { 
+    this.render('lyrics');
+    var params = this.params;
+    var song = params._song;
+    Meteor.defer(function() {
+        selected = new Selected(song);
+        selected.init();
+    });
+
+ });
+
 if (Meteor.isClient) {
     window.onload = function () {
         selected = new Selected();
@@ -5,6 +21,8 @@ if (Meteor.isClient) {
     };
 
     var Selected = function () {
+    var Selected = function (songName) {
+        this.song = songName;
         this.audio = document.getElementById('audio');
         this.lyricContainer = document.getElementById('lyricContainer');
         this.currentLine = document.getElementById('current_line');
@@ -28,7 +46,7 @@ if (Meteor.isClient) {
                 currentSong, randomSong;
 
             //get the hash from the url if there's any.
-            var songName = window.location.hash.substr(1);
+            var songName = this.song;
 
             //set the song name to the hash of the url
             window.location.hash = window.location.hash || randomSong;
@@ -51,6 +69,7 @@ if (Meteor.isClient) {
                 }
             }, false);
 
+
             var index = 1;
             setInterval(displayAd, 15000);
             function displayAd(){
@@ -62,8 +81,9 @@ if (Meteor.isClient) {
                     index = 1;
                 }
             }
-            //this.play(randomSong);
+            this.play(this.song);
         },
+
         secondsToString: function (totalSeconds) {
             var minutes = Math.floor(totalSeconds / 60);
             var seconds = Math.floor(totalSeconds - (minutes * 60));
@@ -71,12 +91,18 @@ if (Meteor.isClient) {
             return minutes + ":" + secStr.substring(secStr.length - 2);
         },
         play: function (songName) {
-            console.log("Play song ...");
+            if($("#play").hasClass('paused')) {
+                $("#play").removeClass('paused');
+                this.pause();
+                return;
+            } else {
+                $("#play").addClass('paused');
+            }
             var that = this;
             if (!songName) {
                 songName = 'lmfao-eng.mp3';
             }
-            this.audio.src = './' + songName;
+            this.audio.src = '/'+this.song+'.mp3';
             //reset the position of the lyric container
             //this.lyricContainer.style.top = '130px';
             //empty the lyric
@@ -116,7 +142,7 @@ if (Meteor.isClient) {
             };
         },
         playNext: function (that) {
-            var songName = "lmfao-spn.mp3";
+            var songName = "lmfao";
             //var allSongs = this.playlist.children[0].children,
             //    nextItem;
             ////reaches the last song of the playlist?
