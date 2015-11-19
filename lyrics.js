@@ -84,9 +84,13 @@ if (Meteor.isClient) {
             this.lyric = null;
             //this.lyricContainer.textContent = 'loading...';
             //this.currentLine.textContent = 'loading...';
+            var lang = "en";
             this.lyricStyle = Math.floor(Math.random() * 4);
             this.audio.oncanplay = function () {
-                that.getLyric(that.audio.src.replace('.mp3', '-spanish.txt'));
+                if (lang != "en") {
+                    that.getLyric(that.audio.src.replace('.mp3', '-spanish.txt'));
+                }
+                that.getLyric(that.audio.src.replace('.mp3', '-english.lrc'));
                 this.play();
             };
             //sync the lyric
@@ -209,6 +213,12 @@ if (Meteor.isClient) {
                 fragment.appendChild(line);
             });
             lyricContainer.appendChild(fragment);
+        },
+        changeLanguage : function(ln){
+            if(!ln){
+                return;
+            }
+            //
         },
         getOffset: function (text) {
             //Returns offset in miliseconds.
