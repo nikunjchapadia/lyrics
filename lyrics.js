@@ -1,428 +1,206 @@
 if (Meteor.isClient) {
-  // - Controls
+  // counter starts at 0
+  Session.setDefault('counter', 0);
 
-  Template.lyrics.onRendered(function () {
+  /*
+   * Selected | a collection of songs that I love
+   * v0.3.0
+   * also as a showcase that shows how to sync lyric with the HTML5 audio tag
+   * Wayou  Apr 5th,2014
+   * view on GitHub:https://github.com/wayou/selected
+   * see the live site:http://wayou.github.io/selected/
+   * songs used in this project are only for educational purpose
+   */
+  window.onload = function() {
+      new Selected().init();
+  };
+  var Selected = function() {
+      this.audio = document.getElementById('audio');
+      this.lyricContainer = document.getElementById('lyricContainer');
+      this.playlist = document.getElementById('playlist');
+      this.currentIndex = 0;
+      this.lyric = null;
+      this.lyricStyle = 0; //random num to specify the different class name for lyric
+  };
+  Selected.prototype = {
+      constructor: Selected, //fix the prototype chain
+      init: function() {
+          //get all songs and add to the playlist
+          var that = this,
+              //allSongs = this.playlist.children[0].children,
+              currentSong, randomSong;
 
-    var play  = document.querySelector("#play"),
-        prev  = document.querySelector("#prev"),
-        next  = document.querySelector("#next"),
-        stop  = document.querySelector("#stop"),
+          //get the hash from the url if there's any.
+          var songName = window.location.hash.substr(1);
 
-    // - Time
-        elapsedTime   = document.querySelector("#elapsedtime"),
-        totalTime     = document.querySelector("#totaltime"),
-        progressBar   = document.querySelector("#progressbar"),
-        audioControls = document.querySelector("#controls"),
+          //set the song name to the hash of the url
+          window.location.hash = window.location.hash || randomSong;
 
-    // - UI elements
-        audio       = document.querySelector("#mytrack"),
-        tracks      = document.querySelector("#tracks"),
-        artwork     = document.querySelector("#artwork"),
-        background  = document.querySelector("#background"),
-
-    // - Interval
-        timer,
-
-    // - Volume
-        volume = audio.volume = 0.4,
-
-    // - Theme
-        colorTheme        = "green",
-        colorThemeDefault = "azure",
-
-    // - Project root
-        projectDir      = "http://michaelmammoliti.com/_projects/audioJS/",
-
-    // - Project folders
-        tracksDir       = projectDir + "songs/",
-        artworksFolder  = projectDir + "artworks/",
-        iconsFolder     = projectDir + "icons/" + colorTheme + "/",
-
-    // - Tracks
-        defaultTrack    = 1,
-        currentTrack    = defaultTrack,
-        playlist        = [],
-
-    // - Audio
-        duration,
-        audioState      = "pause",
-
-    // - Auto
-        autoPlay        = true,
-        autoRepeat      = true;
-
-    // - Audio Controls
-      function playAudio()
-      {
-
-        var src = '/client/songs/ai_ni.mp3'
-        //var src = tracksDir + addZero(defaultTrack, 2) + ".mp3",
-        var icon = iconsFolder + "pause.png";
-
-        // Autoload track
-        if(audio.getAttribute("src") === ""){ audio.src = src; }
-
-        audio.play(); // Play
-        audioState = "play";
-        changeBackgroundImage(play, icon);
-
-        // Update the time
-        timer = setInterval( updateTime, 100 );
-
-      }
-
-
-    // - Control's functions
-      function pauseAudio()
-      {
-
-        var icon = projectDir + "icons/" + colorThemeDefault + "/play.png";
-
-        audio.pause();
-        audioState = "pause";
-
-        changeBackgroundImage(play, icon);
-
-        clearInterval(timer);
-      }
-
-      function stopAudio()
-      {
-        audio.currentTime = 0;
-        clearInterval(timer);
-      }
-
-
-    // - Update DOM elements
-
-    	// Activate the track
-      function updateActiveTrack(num)
-      {
-        tracks.children[num-1].classList.add("active");
-      }
-
-    	// Chamge audio tag song
-      function changeSong(num)
-      {
-
-        currentTrack  = parseInt(num);
-
-        var artworkSrc,
-            src         = tracksDir + addZero(currentTrack, 2) + ".mp3";
-
-        // Delete CSS classes to all tracks
-        for(var i = 0; i < playlist.length; i++) { tracks.children[i].removeAttribute("class"); }
-
-        artworkSrc    = artworksFolder + addZero(currentTrack, 2) + ".jpg";
-        audio.src     = src;
-        artwork.src   = artworkSrc;
-
-        updateActiveTrack(currentTrack);
-        changeBackgroundImage(artwork, artworkSrc);
-        changeBackgroundImage(document.body, artworkSrc);
-
-        if(audioState === "play") { playAudio(); }
-      }
-
-
-    // - TIME
-      function getAudioSeconds(string)
-      {
-        var seconds = string % 60;
-            seconds = addZero( Math.floor(seconds), 2 );
-
-        if(seconds < 60) { return seconds; } else { return "00"; }
-      }
-
-      function getAudioMinutes(string)
-      {
-        var minutes = string / 60;
-            minutes = addZero( Math.floor(minutes), 2 );
-
-        if(minutes < 60) { return minutes; } else { return "00"; }
-      }
-
-    // - FIX ZERO - Nice functions i made, i think sharing will it helps
-
-    	// Add howManyZero to from the begin
-      function addZero(word, howManyZero)
-      {
-        var word = String(word);
-
-        while(word.length < howManyZero) { word = "0" + word; }
-
-        return word;
-      }
-
-    	// - Remove howManyZero from the begin
-      function removeZero(word, howManyZero)
-      {
-        var word  = String(word),
-            i     = 0;
-
-        while(i < howManyZero)
-        {
-          if(word[0] === "0") { word = word.substr(1, word.length); } else { break; }
-
-          i++;
-        }
-
-        return word;
-      }
-
-    // - Manage DOM Nodes
-      function insertDOMElement(parent, htmlString)
-      {
-        parent.insertAdjacentHTML("beforeend", htmlString);
-      }
-
-      function createTrackItem(trackNum, trackTitle, trackArtist, trackImage)
-      {
-        var div = "";
-
-        div += "<artwork style='background-image: url(\"" + trackImage + "\")'></artwork>";
-        div += "<span>" + trackNum + ". " + trackArtist + " - " + trackTitle + "</span>";
-
-        return div;
-      }
-
-      function populateTrack()
-      {
-        var children, trackName, trackArtist, trackartwork, obj;
-
-        for(var i = 0; i < tracks.children.length; i++)
-        {
-
-          children      = tracks.children[i],
-          trackName     = children.getAttribute("trackname"),
-          trackArtist   = children.getAttribute("trackartist"),
-          trackartwork  = children.getAttribute("trackartwork"),
-          obj           = {
-            title: trackName,
-            artist: trackArtist,
-            artwork: trackartwork
+          this.audio.onended = function() {
+              that.playNext(that);
+          }
+          this.audio.onerror = function(e) {
+            //debugger;
+              that.lyricContainer.textContent = '!fail to load the song :(';
           };
 
-          playlist.push(obj);
-
-          insertDOMElement(
-            children,
-            createTrackItem(
-              addZero((i+1) ,2),
-              playlist[i].title,
-              playlist[i].artist,
-              artworksFolder + playlist[i].artwork
-            )
-          );
-
-          children.removeAttribute("trackname");
-          children.removeAttribute("trackartist");
-          children.removeAttribute("trackartwork");
-
-          children.setAttribute("tracknum", i+1);
-        }
-      }
-
-    // - DOM Animation / Styles / Updates
-      function changeBackgroundImage(element, image)
-      {
-        element.style.backgroundImage = "url('" + image + "')";
-      }
-
-      function updateProgressBarPosition()
-      {
-        var percentage  = (audio.currentTime * 100 / duration) + "%",
-            children    = progressBar.children[0];
-
-        children.style.width = percentage;
-      }
-
-      function updateTime()
-      {
-        var audioTime = getAudioMinutes(audio.currentTime) + ":" + getAudioSeconds(audio.currentTime);
-
-        updateProgressBarPosition();
-        elapsedTime.innerHTML = audioTime;
-
-        if(audio.ended)
-        {
-
-          if(currentTrack === (playlist.length))
-          {
-            currentTrack = defaultTrack;
-            changeSong(currentTrack);
-          }
-            else
-            {
-              currentTrack = currentTrack + 1;
-              changeSong(currentTrack);
-            }
-
-          if(autoRepeat) { playAudio(); }
-
-        }
-      }
-
-    // - POPULATE HTML
-      populateTrack();
-
-    // - EVENTS
-      window.onload = function() { changeSong(defaultTrack); };
-
-      audio.addEventListener(
-        'loadedmetadata',
-        function()
-        {
-          var time = getAudioMinutes(duration) + ":" + getAudioSeconds(duration);
-
-          duration            = audio.duration;
-          totalTime.innerHTML = time;
-
-        }
-      );
-
-      play.addEventListener(
-        "click",
-        function()
-        {
-          if(audioState === "pause")
-          {
-            playAudio();
-            updateActiveTrack( currentTrack );
-          }
-            else if(audioState === "play") { pauseAudio(); }
-        }
-      );
-
-      stop.addEventListener(
-        "click",
-        function()
-        {
-          stopAudio();
-          pauseAudio();
-          updateTime();
-        }
-      );
-
-      prev.addEventListener(
-        "click",
-        function()
-        {
-          if(currentTrack > 1)
-          {
-            stopAudio();
-            changeSong(currentTrack - 1);
-          }
-            else if(currentTrack === 1)
-            {
-              stopAudio();
-              changeSong(currentTrack);
-            }
-        }
-      );
-
-      next.addEventListener(
-        "click",
-        function()
-        {
-          if(currentTrack < playlist.length)
-          {
-            stopAudio();
-            updateTime();
-            changeSong(currentTrack + 1);
-            console.log(currentTrack);
-          }
-            else
-            {
-              currentTrack = 1;
-              changeSong(currentTrack);
-            }
-        }
-      );
-
-      progressBar.addEventListener(
-        "click",
-        function(e)
-        {
-          var mouseX,
-              percentage,
-              newTime;
-
-          if(e.offsetX){ mouseX = e.offsetX; }
-          if(mouseX == undefined && e.layerX) { mouseX = e.layerX; }
-
-          percentage  = mouseX / progressBar.offsetWidth;
-          newTime     = audio.duration * percentage;
-
-          audio.currentTime = newTime;
-
-          updateProgressBarPosition();
-        }
-      );
-
-      // - Add events to all tracks
-        for(var i = 0; i < playlist.length; i++)
-        {
-
-          tracks.children[i].addEventListener(
-            "click",
-            function()
-            {
-              var btn       = this,
-                  trackNum  = parseInt(btn.getAttribute("tracknum"));
-
-              if(btn.classList[0] !== "active")
-              {
-                tracks.children[1].removeAttribute("class");
-                btn.classList.add("active");
-
-                changeSong(trackNum);
+          //enable keyboard control , spacebar to play and pause
+          window.addEventListener('keydown', function(e) {
+              if (e.keyCode === 32) {
+                  if (that.audio.paused) {
+                      that.audio.play();
+                  } else {
+                      that.audio.pause();
+                  }
               }
-            }
-          );
+          }, false);
 
-        }
+          this.play(randomSong);
+      },
 
-      // - Add events to all audioControls
-        for(var i = 0; i < audioControls.children.length; i++)
-        {
+      play: function(songName) {
+          var that = this;
+          this.audio.src = './lmfao.mp3';
+          //reset the position of the lyric container
+          this.lyricContainer.style.top = '130px';
+          //empty the lyric
+          this.lyric = null;
+          this.lyricContainer.textContent = 'loading...';
+          this.lyricStyle = Math.floor(Math.random() * 4);
+          this.audio.oncanplay = function() {              
+              that.getLyric(that.audio.src.replace('.mp3', '-spanish.txt'));
+              this.play();
+          };
+          //sync the lyric
+          this.audio.ontimeupdate = function(e) {
+              if (!that.lyric) return;
+              for (var i = 0, l = that.lyric.length; i < l; i++) {
+                  if (this.currentTime > that.lyric[i][0] - 0.50 /*preload the lyric by 0.50s*/ ) {
+                      //single line display mode
+                      // that.lyricContainer.textContent = that.lyric[i][1];
+                      //scroll mode
+                      var line = document.getElementById('line-' + i),
+                          prevLine = document.getElementById('line-' + (i > 0 ? i - 1 : i));
+                      prevLine.className = '';
+                      //randomize the color of the current line of the lyric
+                      line.className = 'current-line-' + that.lyricStyle;
+                      that.lyricContainer.style.top = 130 - line.offsetTop + 'px';
+                  };
+              };
+          };
+      },
+      playNext: function(that) {
+          var allSongs = this.playlist.children[0].children,
+              nextItem;
+          //reaches the last song of the playlist?
+          if (that.currentIndex === allSongs.length - 1) {
+              //play from start
+              that.currentIndex = 0;
+          } else {
+              //play next index
+              that.currentIndex += 1;
+          };
+          nextItem = allSongs[that.currentIndex].children[0];
+          that.setClass(that.currentIndex);
+          var songName = nextItem.getAttribute('data-name');
+          window.location.hash = songName;
+          that.play(songName);
+      },
+      setClass: function(index) {
 
-          audioControls.children[i].addEventListener(
-            "mousedown",
-            function()
-            {
-              var btn   = this,
-                  icon  = iconsFolder + btn.id + ".png";
+      },
+      getLyric: function(url) {
+          var that = this,
+              request = new XMLHttpRequest();
+          request.open('GET', url, true);
+          request.responseType = 'text';
+          //fix for the messy code problem for Chinese.  reference: http://xx.time8.org/php/20101218/ajax-xmlhttprequest.html
+          //request['overrideMimeType'] && request.overrideMimeType("text/html;charset=gb2312");
+          request.onload = function() {
+              that.lyric = that.parseLyric(request.response);
+              //display lyric to the page
+              that.appendLyric(that.lyric);
+          };
+          request.onerror = request.onabort = function(e) {
+              that.lyricContainer.textContent = '!failed to load the lyric :(';
+          }
+          this.lyricContainer.textContent = 'loading lyric...';
+          request.send();
+      },
+      parseLyric: function(text) {
+          //get each line from the text
 
-              changeBackgroundImage( btn, icon );
+          var lines = text.split('\n'),
+              //this regex mathes the time [00.12.78]
+              pattern = /\[\d{2}:\d{2}.\d{2}\]/g,
+              result = [];
 
-              if(btn.classList[0] !== "shadow")
-              {
-                for(var x = 0; x < audioControls.children.length; x++)
-                {
-                  audioControls.children[x].classList.remove("shadow");
+          // Get offset from lyrics
+          var offset = this.getOffset(text);
+
+          //exclude the description parts or empty parts of the lyric
+          while (!pattern.test(lines[0])) {
+              lines = lines.slice(1);
+          };
+
+          //remove the last empty item
+          lines[lines.length - 1].length === 0 && lines.pop();
+          //display all content on the page
+          debugger;
+          lines.forEach(function(v, i, a) {
+            console.log('v: ' + v);
+            console.log('v.match(pattern): ' + v.match(pattern));
+              var time = v.match(pattern),
+                  value = v.replace(pattern, '');
+              time.forEach(function(v1, i1, a1) {
+                  //convert the [min:sec] to secs format then store into result
+                  var t = v1.slice(1, -1).split(':');
+                  result.push([parseInt(t[0], 10) * 60 + parseFloat(t[1]) + parseInt(offset) / 1000, value]);
+              });
+          });
+          //sort the result by time
+          result.sort(function(a, b) {
+              return a[0] - b[0];
+          });
+          return result;
+      },
+      appendLyric: function(lyric) {
+          var that = this,
+              lyricContainer = this.lyricContainer,
+              fragment = document.createDocumentFragment();
+          //clear the lyric container first
+          this.lyricContainer.innerHTML = '';
+          lyric.forEach(function(v, i, a) {
+              var line = document.createElement('p');
+              line.id = 'line-' + i;
+              line.textContent = v[1];
+              fragment.appendChild(line);
+          });
+          lyricContainer.appendChild(fragment);
+      },
+      getOffset: function(text) {
+          //Returns offset in miliseconds.
+          var offset = 0;
+          try {
+              // Pattern matches [offset:1000]
+              var offsetPattern = /\[offset:\-?\+?\d+\]/g;
+
+              if(text.match(offsetPattern)) {
+                  // Get only the first match.
+                  var offset_line = text.match(offsetPattern)[0],
+                  // Get the second part of the offset.
+                  offset_str = offset_line.split(':')[1];
+                  // Convert it to Int.
+                  offset = parseInt(offset_str);
                 }
-              }
-            }
-          );
-
-          audioControls.children[i].addEventListener(
-            "mouseup",
-            function()
-            {
-              var btn   = this,
-                  icon  = projectDir + "icons/" + colorThemeDefault + "/" + btn.id + ".png";
-
-              changeBackgroundImage( btn, icon );
-            }
-          );
-
-        }
-
-  });
-
-
+          } catch (err) {
+              offset = 0;
+          }
+          return offset;
+      }
+  };
 }
+
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
