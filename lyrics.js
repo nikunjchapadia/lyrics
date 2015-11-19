@@ -85,6 +85,18 @@ if (Meteor.isClient) {
         },
 
         play: function (songName) {
+
+
+            if($("#play").hasClass('paused')) {
+                $("#play").removeClass('paused');
+                this.pause();
+                return;
+            } else {
+                $("#play").addClass('paused');
+
+            }
+
+
             console.log("Play song ...");
             var that = this;
             this.audio.src = './lmfao.mp3';
