@@ -3,8 +3,11 @@ if (Meteor.isClient) {
     Session.setDefault('counter', 0);
 
     window.onload = function () {
-        new Selected().init();
+        selected = new Selected();
+        selected.init();
+        //new Selected().init();
     };
+
     var Selected = function () {
         this.audio = document.getElementById('audio');
         this.lyricContainer = document.getElementById('lyricContainer');
@@ -46,10 +49,11 @@ if (Meteor.isClient) {
                 }
             }, false);
 
-            this.play(randomSong);
+            //this.play(randomSong);
         },
 
         play: function (songName) {
+            console.log("Play song ...");
             var that = this;
             this.audio.src = './lmfao.mp3';
             //reset the position of the lyric container
@@ -77,9 +81,7 @@ if (Meteor.isClient) {
                         line.className = 'current-line-' + that.lyricStyle;
                         that.lyricContainer.style.top = 130 - line.offsetTop + 'px';
                     }
-                    ;
                 }
-                ;
             };
         },
         playNext: function (that) {
@@ -143,8 +145,8 @@ if (Meteor.isClient) {
             //display all content on the page
             debugger;
             lines.forEach(function (v, i, a) {
-                console.log('v: ' + v);
-                console.log('v.match(pattern): ' + v.match(pattern));
+                //console.log('v: ' + v);
+                //console.log('v.match(pattern): ' + v.match(pattern));
                 var time = v.match(pattern),
                     value = v.replace(pattern, '');
                 time.forEach(function (v1, i1, a1) {

@@ -12,17 +12,16 @@
     <!-- old template-->
     <div class="wrapper">
         <div id="player">
-            <audio controls id="audio" src="./content/lmfao.mp3">!audio not supported :(</audio>
+            <!--<audio controls id="audio" src="./content/lmfao.mp3">!audio not supported :(</audio>-->
         </div>
-        <div id="playlist">
-            <ol>
-            </ol>
-            <div class="info">
-                <div class="bg" id="bg_dark" title="use color for background"></div>
-                <div class="bg" id="bg_pic" title="use image for background"></div>
-                <small> view on <a target="_blank" href="https://github.com/wayou/selected/">GitHub</a></small>
-            </div>
-        </div>
+        <!--<div id="playlist">-->
+            <!--<ol>-->
+            <!--</ol>-->
+            <!--<div class="info">-->
+                <!--<div class="bg" id="bg_dark" title="use color for background"></div>-->
+                <!--<div class="bg" id="bg_pic" title="use image for background"></div>-->
+            <!--</div>-->
+        <!--</div>-->
         <div id="lyricWrapper">
             <div id="lyricContainer">
             </div>
@@ -61,7 +60,8 @@
                 <div class='background' id='background'>&nbsp;</div>
                 <div>
 
-                    <audio id='mytrack' src=''>&nbsp;</audio>
+                    <!--<audio id='mytrack' src=''>&nbsp;</audio>-->
+                    <audio controls id="audio" src='' hidden>!audio not supported :(</audio>
 
                     <!-- <div id='artwork'>&nbsp;</div> -->
 
@@ -85,7 +85,7 @@
                                     class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
                                 <i class="zmdi zmdi-skip-previous"></i>
                             </button>
-                            <button id='play'
+                            <button id='play' onclick="selected.play()"
                                     class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
                                 <i class="zmdi zmdi-play"></i>
                             </button>
