@@ -109,6 +109,9 @@ if (Meteor.isClient) {
             window.location.hash = songName;
             that.play(songName);
         },
+        pause : function(){
+            this.audio.pause();
+        },
         setClass: function (index) {
 
         },

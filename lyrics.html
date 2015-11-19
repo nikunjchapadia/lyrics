@@ -76,7 +76,7 @@
                         </div> -->
 
                         <div class='controls'>
-                            <button id='prev'
+                            <button id='prev' onclick="selected.playNext()"
                                     class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
                                 <i class="zmdi zmdi-skip-previous"></i>
                             </button>
@@ -84,11 +84,11 @@
                                     class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
                                 <i class="zmdi zmdi-play"></i>
                             </button>
-                            <button id='stop'
+                            <button id='stop' onclick="selected.pause()"
                                     class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
                                 <i class="zmdi zmdi-stop"></i>
                             </button>
-                            <button id='next'
+                            <button id='next' onclick="selected.playNext()"
                                     class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
                                 <i class="zmdi zmdi-skip-next"></i>
                             </button>
