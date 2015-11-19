@@ -105,6 +105,29 @@ body {
 .lyrics-text{
   width: 100%;
   text-align: center;
-  color: #3E4EB8
+  color: #999999;
+  font-size: 14px !important;
+}
+
+#current_line {
+  color: #333333;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+
+#previous_line {
+  margin-bottom: 5px;
+}
+
+#slider-circle {
+  position: relative;
+}
+
+.mdl-slider__background-flex {
+  background-color: #000000;
+}
+
+html, body {
+  font-family: 'Segoe UI', sans-serif;
 }
 

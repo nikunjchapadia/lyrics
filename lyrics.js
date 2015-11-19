@@ -5,8 +5,6 @@ if (Meteor.isClient) {
     window.onload = function () {
         selected = new Selected();
         selected.init();
-
-        //new Selected().init();
     };
 
     var Selected = function () {
@@ -14,6 +12,9 @@ if (Meteor.isClient) {
         this.lyricContainer = document.getElementById('lyricContainer');
         this.currentLine = document.getElementById('current_line');
         this.playlist = document.getElementById('playlist');
+        this.elapsedTimeContainer = document.getElementById('elapsedtime');
+        this.totalTimeContainer = document.getElementById('totaltime');
+        this.sliderCircle = document.getElementById('slider-circle');
         this.adContainer = document.getElementById('ad_container');
         this.currentIndex = 0;
         this.lyric = null;
@@ -67,6 +68,13 @@ if (Meteor.isClient) {
             //this.play(randomSong);
         },
 
+        secondsToString: function (totalSeconds) {
+            var minutes = Math.floor(totalSeconds / 60);
+            var seconds = Math.floor(totalSeconds - (minutes * 60));
+            var secStr = "0" + seconds;
+            return minutes + ":" + secStr.substring(secStr.length - 2);
+        },
+
         play: function (songName) {
             console.log("Play song ...");
             var that = this;
@@ -84,7 +92,19 @@ if (Meteor.isClient) {
             };
             //sync the lyric
             this.audio.ontimeupdate = function (e) {
-                //console.log("Sync lyrics ....")
+
+                var totalTime = that.audio.duration;
+
+                var elapsedTime = that.audio.currentTime;
+                //derive our own % so we can draw fractions. progress obj only has whole percents
+                var percentPlayed = (elapsedTime/totalTime)*100;
+
+                that.elapsedTimeContainer.innerHTML = that.secondsToString(elapsedTime);
+                that.totalTimeContainer.innerHTML = that.secondsToString(totalTime);
+                that.sliderCircle.style.left = percentPlayed + "%";
+
+
+                console.log("Sync lyrics ....")
                 if (!that.lyric) return;
                 for (var i = 0, l = that.lyric.length; i < l; i++) {
                     /*preload the lyric by 0.50s*/
@@ -92,11 +112,18 @@ if (Meteor.isClient) {
                         //single line display mode
                         that.lyricContainer.textContent = that.lyric[i][1];
                         that.currentLine.textContent = that.lyric[i][1];
-                        //console.log(that.lyricContainer.textContent);
                         //scroll mode
-                        //var line = document.getElementById('line-' + i),
-                        //    prevLine = document.getElementById('line-' + (i > 0 ? i - 1 : i));
-                        //    //prevLine.className = '';
+                        if(i > 0) {
+                            var prevLine = document.getElementById('previous_line');
+                            prevLine.innerHTML = that.lyric[i-1][1];
+                        }
+
+                        if(i < l - 1) {
+                            var nextLine = document.getElementById('next_line');
+                            nextLine.innerHTML = that.lyric[i+1][1];
+                        }
+                        
+                           //prevLine.className = '';
                         //console.log(line);
                         //console.log(prevLine);
                         ////randomize the color of the current line of the lyric
@@ -168,8 +195,6 @@ if (Meteor.isClient) {
             //display all content on the page
             debugger;
             lines.forEach(function (v, i, a) {
-                //console.log('v: ' + v);
-                //console.log('v.match(pattern): ' + v.match(pattern));
                 var time = v.match(pattern),
                     value = v.replace(pattern, '');
                 time.forEach(function (v1, i1, a1) {
