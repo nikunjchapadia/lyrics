@@ -38,7 +38,6 @@ if (Meteor.isClient) {
                 that.playNext(that);
             }
             this.audio.onerror = function (e) {
-                //debugger;
                 that.lyricContainer.textContent = '!fail to load the song :(';
             };
 
@@ -80,11 +79,11 @@ if (Meteor.isClient) {
             var that = this;
             this.audio.src = './lmfao.mp3';
             //reset the position of the lyric container
-            this.lyricContainer.style.top = '130px';
+            //this.lyricContainer.style.top = '130px';
             //empty the lyric
             this.lyric = null;
-            this.lyricContainer.textContent = 'loading...';
-            this.currentLine.textContent = 'loading...';
+            //this.lyricContainer.textContent = 'loading...';
+            //this.currentLine.textContent = 'loading...';
             this.lyricStyle = Math.floor(Math.random() * 4);
             this.audio.oncanplay = function () {
                 that.getLyric(that.audio.src.replace('.mp3', '-spanish.txt'));
@@ -109,26 +108,12 @@ if (Meteor.isClient) {
                 for (var i = 0, l = that.lyric.length; i < l; i++) {
                     /*preload the lyric by 0.50s*/
                     if (this.currentTime > that.lyric[i][0] - 0.50) {
-                        //single line display mode
-                        that.lyricContainer.textContent = that.lyric[i][1];
-                        that.currentLine.textContent = that.lyric[i][1];
-                        //scroll mode
-                        if(i > 0) {
-                            var prevLine = document.getElementById('previous_line');
-                            prevLine.innerHTML = that.lyric[i-1][1];
-                        }
+                        $('p', that.lyricContainer).removeClass('current');
+                        $($('p', that.lyricContainer).get(i)).addClass('current');
 
-                        if(i < l - 1) {
-                            var nextLine = document.getElementById('next_line');
-                            nextLine.innerHTML = that.lyric[i+1][1];
+                        if (i > 2) {
+                            that.lyricContainer.style.top = (-29 * (i - 2)) + 'px';
                         }
-                        
-                           //prevLine.className = '';
-                        //console.log(line);
-                        //console.log(prevLine);
-                        ////randomize the color of the current line of the lyric
-                        //line.className = 'current-line-' + that.lyricStyle;
-                        //that.lyricContainer.style.top = 130 - line.offsetTop + 'px';
                     }
                 }
             };
@@ -168,10 +153,10 @@ if (Meteor.isClient) {
                 //display lyric to the page
                 that.appendLyric(that.lyric);
             };
-            request.onerror = request.onabort = function (e) {
-                that.lyricContainer.textContent = '!failed to load the lyric :(';
-            }
-            this.lyricContainer.textContent = 'loading lyric...';
+            // request.onerror = request.onabort = function (e) {
+            //     that.lyricContainer.textContent = '!failed to load the lyric :(';
+            // }
+            //this.lyricContainer.textContent = 'loading lyric...';
             request.send();
         },
         parseLyric: function (text) {
@@ -193,7 +178,6 @@ if (Meteor.isClient) {
             //remove the last empty item
             lines[lines.length - 1].length === 0 && lines.pop();
             //display all content on the page
-            debugger;
             lines.forEach(function (v, i, a) {
                 var time = v.match(pattern),
                     value = v.replace(pattern, '');
@@ -214,10 +198,13 @@ if (Meteor.isClient) {
                 lyricContainer = this.lyricContainer,
                 fragment = document.createDocumentFragment();
             //clear the lyric container first
-            this.lyricContainer.innerHTML = '';
+            //this.lyricContainer.innerHTML = '';
             lyric.forEach(function (v, i, a) {
                 var line = document.createElement('p');
-                line.id = 'line-' + i;
+                //line.id = 'line-' + i;
+                if(i === 0) {
+                    line.className = "current";
+                }
                 line.textContent = v[1];
                 fragment.appendChild(line);
             });
