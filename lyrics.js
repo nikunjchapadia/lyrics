@@ -80,9 +80,17 @@ if (Meteor.isClient) {
                         that.currentLine.textContent = that.lyric[i][1];
                         console.log(that.lyricContainer.textContent);
                         //scroll mode
-                        //var line = document.getElementById('line-' + i),
-                        //    prevLine = document.getElementById('line-' + (i > 0 ? i - 1 : i));
-                        //    //prevLine.className = '';
+                        if(i > 0) {
+                            var prevLine = document.getElementById('previous_line');
+                            prevLine.innerHTML = that.lyric[i-1][1];
+                        }
+
+                        if(i < l - 1) {
+                            var nextLine = document.getElementById('next_line');
+                            nextLine.innerHTML = that.lyric[i+1][1];
+                        }
+                        
+                           //prevLine.className = '';
                         //console.log(line);
                         //console.log(prevLine);
                         ////randomize the color of the current line of the lyric
