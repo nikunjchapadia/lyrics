@@ -1,7 +1,4 @@
 if (Meteor.isClient) {
-    // counter starts at 0
-    Session.setDefault('counter', 0);
-
     window.onload = function () {
         selected = new Selected();
         selected.init();
@@ -20,8 +17,7 @@ if (Meteor.isClient) {
         this.currentIndex = 0;
         this.lyric = null;
         this.lyricStyle = 0; //random num to specify the different class name for lyric
-        this.lang = "en";
-        this.songs = ['lmfao', 'lmfao', 'lmfao'];
+        this.songs = ['song1', 'song2', 'song3'];
     };
     Selected.prototype = {
         constructor: Selected, //fix the prototype chain
@@ -55,7 +51,6 @@ if (Meteor.isClient) {
                 }
             }, false);
 
-
             var index = 1;
             setInterval(displayAd, 15000);
             function displayAd(){
@@ -67,27 +62,21 @@ if (Meteor.isClient) {
                     index = 1;
                 }
             }
-
-            this.langControl.addEventListener('click', function(ln) {
-                if(!ln){
-                    return;
-                }
-                that.lang = ln;
-            });
             //this.play(randomSong);
         },
-
         secondsToString: function (totalSeconds) {
             var minutes = Math.floor(totalSeconds / 60);
             var seconds = Math.floor(totalSeconds - (minutes * 60));
             var secStr = "0" + seconds;
             return minutes + ":" + secStr.substring(secStr.length - 2);
         },
-
         play: function (songName) {
             console.log("Play song ...");
             var that = this;
-            this.audio.src = './lmfao.mp3';
+            if (!songName) {
+                songName = 'lmfao-eng.mp3';
+            }
+            this.audio.src = './' + songName;
             //reset the position of the lyric container
             //this.lyricContainer.style.top = '130px';
             //empty the lyric
@@ -96,11 +85,7 @@ if (Meteor.isClient) {
             //this.currentLine.textContent = 'loading...';
             this.lyricStyle = Math.floor(Math.random() * 4);
             this.audio.oncanplay = function () {
-                console.log("loading lyrics ...", that.lang);
-                if (that.lang != "en") {
-                    that.getLyric(that.audio.src.replace('.mp3', '-spanish.txt'));
-                }
-                that.getLyric(that.audio.src.replace('.mp3', '-english.lrc'));
+                that.getLyric(that.audio.src.replace('.mp3', '.lrc'));
                 this.play();
             };
             //sync the lyric
@@ -116,8 +101,6 @@ if (Meteor.isClient) {
                 that.totalTimeContainer.innerHTML = that.secondsToString(totalTime);
                 that.sliderCircle.style.left = percentPlayed + "%";
 
-
-                console.log("Sync lyrics ....")
                 if (!that.lyric) return;
                 for (var i = 0, l = that.lyric.length; i < l; i++) {
                     /*preload the lyric by 0.50s*/
@@ -133,7 +116,7 @@ if (Meteor.isClient) {
             };
         },
         playNext: function (that) {
-            var songName = "lmfao";
+            var songName = "lmfao-spn.mp3";
             //var allSongs = this.playlist.children[0].children,
             //    nextItem;
             ////reaches the last song of the playlist?
@@ -148,7 +131,7 @@ if (Meteor.isClient) {
             //that.setClass(that.currentIndex);
             //var songName = nextItem.getAttribute('data-name');
             window.location.hash = songName;
-            that.play(songName);
+            this.play(songName);
         },
         pause : function(){
             this.audio.pause();
