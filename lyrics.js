@@ -1,14 +1,25 @@
+
+Router.route('/', function () { 
+    this.render('home', {data: {title: 'Home'}}); 
+});
+
+Router.route('/play/:_song', function () { 
+    this.render('lyrics');
+    var params = this.params;
+    var song = params._song;
+    Meteor.defer(function() {
+        selected = new Selected(song);
+        selected.init();
+    });
+
+ });
+
 if (Meteor.isClient) {
     // counter starts at 0
     Session.setDefault('counter', 0);
 
-    window.onload = function () {
-        selected = new Selected();
-        selected.init();
-        //new Selected().init();
-    };
-
-    var Selected = function () {
+    var Selected = function (songName) {
+        this.song = songName;
         this.audio = document.getElementById('audio');
         this.lyricContainer = document.getElementById('lyricContainer');
         this.currentLine = document.getElementById('current_line');
@@ -16,6 +27,7 @@ if (Meteor.isClient) {
         this.elapsedTimeContainer = document.getElementById('elapsedtime');
         this.totalTimeContainer = document.getElementById('totaltime');
         this.sliderCircle = document.getElementById('slider-circle');
+        this.adContainer = document.getElementById('ad_container');
         this.currentIndex = 0;
         this.lyric = null;
         this.lyricStyle = 0; //random num to specify the different class name for lyric
@@ -29,18 +41,16 @@ if (Meteor.isClient) {
                 currentSong, randomSong;
 
             //get the hash from the url if there's any.
-            var songName = window.location.hash.substr(1);
+            var songName = this.song;
 
             //set the song name to the hash of the url
             window.location.hash = window.location.hash || randomSong;
-
             this.audio.onended = function () {
                 that.playNext(that);
             }
-            this.audio.onerror = function (e) {
-                //debugger;
-                that.lyricContainer.textContent = '!fail to load the song :(';
-            };
+            // this.audio.onerror = function (e) {
+            //     that.lyricContainer.textContent = '!fail to load the song :(';
+            // };
 
             //enable keyboard control , spacebar to play and pause
             window.addEventListener('keydown', function (e) {
@@ -53,7 +63,19 @@ if (Meteor.isClient) {
                 }
             }, false);
 
-            //this.play(randomSong);
+
+            var index = 1;
+            setInterval(displayAd, 15000);
+            function displayAd(){
+                var ad = 'ads/ad' + index + '.jpg';
+                console.log("ad", ad);
+                that.adContainer.style.backgroundImage = "url(" + ad + ")";
+                index++;
+                if(index == 8){
+                    index = 1;
+                }
+            }
+            this.play(this.song);
         },
 
         secondsToString: function (totalSeconds) {
@@ -66,16 +88,17 @@ if (Meteor.isClient) {
         play: function (songName) {
             console.log("Play song ...");
             var that = this;
-            this.audio.src = './lmfao.mp3';
+
+            this.audio.src = '/'+this.song+'.mp3';
             //reset the position of the lyric container
-            this.lyricContainer.style.top = '130px';
+            //this.lyricContainer.style.top = '130px';
             //empty the lyric
             this.lyric = null;
-            this.lyricContainer.textContent = 'loading...';
-            this.currentLine.textContent = 'loading...';
+            //this.lyricContainer.textContent = 'loading...';
+            //this.currentLine.textContent = 'loading...';
             this.lyricStyle = Math.floor(Math.random() * 4);
             this.audio.oncanplay = function () {
-                that.getLyric(that.audio.src.replace('.mp3', '-spanish.txt'));
+                that.getLyric(songName + '-spanish.txt');
                 this.play();
             };
             //sync the lyric
@@ -97,27 +120,12 @@ if (Meteor.isClient) {
                 for (var i = 0, l = that.lyric.length; i < l; i++) {
                     /*preload the lyric by 0.50s*/
                     if (this.currentTime > that.lyric[i][0] - 0.50) {
-                        //single line display mode
-                        that.lyricContainer.textContent = that.lyric[i][1];
-                        that.currentLine.textContent = that.lyric[i][1];
-                        console.log(that.lyricContainer.textContent);
-                        //scroll mode
-                        if(i > 0) {
-                            var prevLine = document.getElementById('previous_line');
-                            prevLine.innerHTML = that.lyric[i-1][1];
-                        }
+                        $('p', that.lyricContainer).removeClass('current');
+                        $($('p', that.lyricContainer).get(i)).addClass('current');
 
-                        if(i < l - 1) {
-                            var nextLine = document.getElementById('next_line');
-                            nextLine.innerHTML = that.lyric[i+1][1];
+                        if (i > 2) {
+                            that.lyricContainer.style.top = (-29 * (i - 2)) + 'px';
                         }
-                        
-                           //prevLine.className = '';
-                        //console.log(line);
-                        //console.log(prevLine);
-                        ////randomize the color of the current line of the lyric
-                        //line.className = 'current-line-' + that.lyricStyle;
-                        //that.lyricContainer.style.top = 130 - line.offsetTop + 'px';
                     }
                 }
             };
@@ -137,7 +145,7 @@ if (Meteor.isClient) {
             that.setClass(that.currentIndex);
             var songName = nextItem.getAttribute('data-name');
             window.location.hash = songName;
-            that.play(songName);
+            that.play(this.song);
         },
         pause : function(){
             this.audio.pause();
@@ -157,10 +165,10 @@ if (Meteor.isClient) {
                 //display lyric to the page
                 that.appendLyric(that.lyric);
             };
-            request.onerror = request.onabort = function (e) {
-                that.lyricContainer.textContent = '!failed to load the lyric :(';
-            }
-            this.lyricContainer.textContent = 'loading lyric...';
+            // request.onerror = request.onabort = function (e) {
+            //     that.lyricContainer.textContent = '!failed to load the lyric :(';
+            // }
+            //this.lyricContainer.textContent = 'loading lyric...';
             request.send();
         },
         parseLyric: function (text) {
@@ -182,7 +190,6 @@ if (Meteor.isClient) {
             //remove the last empty item
             lines[lines.length - 1].length === 0 && lines.pop();
             //display all content on the page
-            debugger;
             lines.forEach(function (v, i, a) {
                 var time = v.match(pattern),
                     value = v.replace(pattern, '');
@@ -203,10 +210,13 @@ if (Meteor.isClient) {
                 lyricContainer = this.lyricContainer,
                 fragment = document.createDocumentFragment();
             //clear the lyric container first
-            this.lyricContainer.innerHTML = '';
+            //this.lyricContainer.innerHTML = '';
             lyric.forEach(function (v, i, a) {
                 var line = document.createElement('p');
-                line.id = 'line-' + i;
+                //line.id = 'line-' + i;
+                if(i === 0) {
+                    line.className = "current";
+                }
                 line.textContent = v[1];
                 fragment.appendChild(line);
             });

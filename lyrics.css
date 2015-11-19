@@ -3,7 +3,18 @@
 }
 .demo-card-wide > .mdl-card__title {
   color: #fff;
-  background: url('../assets/demos/welcome_card.jpg') center / cover;
+}
+.demo-card-wide > .mdl-card__menu {
+  color: #fff;
+}
+
+.demo-card-wide.mdl-card {
+  width: 400px;
+}
+.demo-card-wide > .mdl-card__title {
+  color: #fff;
+  height: 176px;
+  background: url('ad1.jpg') center / cover;
 }
 .demo-card-wide > .mdl-card__menu {
   color: #fff;
@@ -15,7 +26,7 @@
 
 .demo-card-image.mdl-card {
   width: 400px;
-  height: 256px;
+  height: 100px;
   /*background: url('http://www.getmdl.io/assets/demos/image_card.jpg') center / cover;*/
   background: url('adele.png') center / cover;
 }
@@ -29,6 +40,34 @@
   font-size: 14px;
   font-weight: 500;
 }
+
+.ads_container.mdl-card {
+  width: 400px;
+  height:200px;
+  padding:10px;
+  background: url('ad1.jpg') center / cover;
+}
+
+.demo-card-ads.mdl-card {
+  width: 400px;
+  height:200px;
+  background: url('ad1.jpg') center / cover;
+}
+.demo-card-ads > .mdl-card__actions {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.demo-card-ads > .mdl-card__title {
+  align-items: flex-start;
+}
+.demo-card-ads > .mdl-card__title > h4 {
+  margin-top: 0;
+}
+.demo-card-ads > .mdl-card__actions {
+  display: flex;
+  box-sizing:border-box;
+  align-items: center;
+}
+
 
 .demo-card-player.mdl-card{
   width: 400px;
@@ -134,3 +173,42 @@ html, body {
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
+
+#lyricOuterContainer {
+  overflow: hidden;
+  margin-top: 25px;
+  height: 150px;
+}
+
+#lyricContainer {
+  text-align: center;
+  position: relative;
+  transition: all 400ms cubic-bezier(0.250, 0.460, 0.450, 0.940);
+  top: 0;
+}
+
+#lyricContainer p {
+  margin-bottom: 5px;
+  color: #999999;
+}
+
+#lyricContainer p.current {
+  color: #000000;
+  font-size: 16px;
+}
+
+/*.demo-image.mdl-card {
+    width: 150px;
+    height: 100px;
+    background: url('../assets/demos/image_card.jpg') center / cover;
+}
+.demo-image > .mdl-card__actions {
+    height: 32px;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.2);
+}
+.demo-image__filename {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+}*/

@@ -9,23 +9,21 @@
 </body>
 
 <template name="home">
-    <p>
-        Data Title: {{title}}
-    </p>
+
     <div class="mdl-grid">
-        <div class="mdl-cell mdl-cell--2-col" onclick="javascript:Router.go('/play/lmfao');">
-            <div class="demo-card-image mdl-card mdl-shadow--2dp">
+        <div class="mdl-cell mdl-cell--2-col" onclick="javascript: Router.go('/play/lmfao')">
+            <div class="demo-image mdl-card mdl-shadow--2dp">
                 <div class="mdl-card__title mdl-card--expand image1"></div>
                 <div class="mdl-card__actions">
-                    <span class="demo-card-image__filename">Image.jpg</span>
+                    <span class="demo-image__filename">Image.jpg</span>
                 </div>
             </div>
         </div>
         <div class="mdl-cell mdl-cell--2-col">
-            <div class="demo-card-image mdl-card mdl-shadow--2dp">
+            <div class="demo-image mdl-card mdl-shadow--2dp">
                 <div class="mdl-card__title mdl-card--expand image2"></div>
                 <div class="mdl-card__actions">
-                    <span class="demo-card-image__filename">Image.jpg</span>
+                    <span class="demo-image__filename">Image.jpg</span>
                 </div>
             </div>
         </div>
@@ -33,18 +31,18 @@
 
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--2-col">
-            <div class="demo-card-image mdl-card mdl-shadow--2dp">
+            <div class="demo-image mdl-card mdl-shadow--2dp">
                 <div class="mdl-card__title mdl-card--expand image3"></div>
                 <div class="mdl-card__actions">
-                    <span class="demo-card-image__filename">Image.jpg</span>
+                    <span class="demo-image__filename">Image.jpg</span>
                 </div>
             </div>
         </div>
         <div class="mdl-cell mdl-cell--2-col">
-            <div class="demo-card-image mdl-card mdl-shadow--2dp">
+            <div class="demo-image mdl-card mdl-shadow--2dp">
                 <div class="mdl-card__title mdl-card--expand image4"></div>
                 <div class="mdl-card__actions">
-                    <span class="demo-card-image__filename">Image.jpg</span>
+                    <span class="demo-image__filename">Image.jpg</span>
                 </div>
             </div>
         </div>
@@ -52,18 +50,18 @@
 
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--2-col">
-            <div class="demo-card-image mdl-card mdl-shadow--2dp">
+            <div class="demo-image mdl-card mdl-shadow--2dp">
                 <div class="mdl-card__title mdl-card--expand image5"></div>
                 <div class="mdl-card__actions">
-                    <span class="demo-card-image__filename">Image.jpg</span>
+                    <span class="demo-image__filename">Image.jpg</span>
                 </div>
             </div>
         </div>
         <div class="mdl-cell mdl-cell--2-col">
-            <div class="demo-card-image mdl-card mdl-shadow--2dp">
+            <div class="demo-image mdl-card mdl-shadow--2dp">
                 <div class="mdl-card__title mdl-card--expand image6"></div>
                 <div class="mdl-card__actions">
-                    <span class="demo-card-image__filename">Image.jpg</span>
+                    <span class="demo-image__filename">Image.jpg</span>
                 </div>
             </div>
         </div>
@@ -71,10 +69,8 @@
 </template>
 
 
+
 <template name="lyrics">
-    <p>
-        Data Title: {{title}}
-    </p>
     <!-- old template-->
     <div class="wrapper">
         <div id="player">
@@ -96,76 +92,72 @@
 
     <!-- new template-->
     <div class="track-container">
-        <!-- Image card -->
-        <div class="demo-card-image mdl-card mdl-shadow--2dp">
+
+        <!-- Track info-->
+        <div class="demo-card-image mdl-card mdl-shadow--2dp" style="opacity: 0.6;">
             <div class="mdl-card__title mdl-card--expand"></div>
             <div class="mdl-card__actions">
-                <span class="demo-card-image__filename">Image.jpg</span>
+                <span class="demo-card-image__filename">Hello from Adele</span>
             </div>
         </div>
-        <!-- Event card -->
+
+        <!-- Ad Container-->
+        <div id="ad_container" class="demo-card-ads mdl-card mdl-shadow--2dp">
+        </div>
+
+        <!-- Lyrics Container-->
         <div class="demo-card-event mdl-card mdl-shadow--2dp">
-            <div id="lyricContainer" hidden>
+            <div id="lyricOuterContainer">
+                <div id="lyricContainer">
+                </div>
             </div>
-            <div style="margin-top:10px;">
-                <p id="previous_line" class="lyrics-text mdl-typography--caption">Previous line</p>
-            </div>
-
-            <div>
-                <p id="current_line" class="lyrics-text mdl-typography--title"></p>
-            </div>
-
-            <div style="margin-top:10px;">
-                <p id="next_line" class="lyrics-text mdl-typography--caption">Next line</p>
-            </div>
-
         </div>
+
+        <!-- Player Container-->
         <div class="demo-card-player mdl-card mdl-shadow--2dp" style="min-height:100px;">
             <div class="mdl-card__actions mdl-card--border" style="background: #3E4EB8">
                 <div class='background' id='background'>&nbsp;</div>
-                <div>
 
-                    <!--<audio id='mytrack' src=''>&nbsp;</audio>-->
-                    <audio controls id="audio" src='' hidden>!audio not supported :(</audio>
+                <!--<audio id='mytrack' src=''>&nbsp;</audio>-->
+                <audio controls id="audio" src='' hidden>!audio not supported :(</audio>
 
-                    <!-- <div id='artwork'>&nbsp;</div> -->
+                <!-- <div id='artwork'>&nbsp;</div> -->
 
-                    <div id='ui'>
+                <div id='ui'>
 
-                        <div id="time">
-                            <span id='elapsedtime' style="float:left;">00:00</span>
-                            <span id='totaltime' style="float:right;">00:00</span>
-                        </div>
-
-                        <input class="mdl-slider mdl-js-slider"
-                               style="color:pink"
-                               type="range"
-                               min="0" max="100" value="0" tabindex="0" id="slider-circle">
-                        <!-- <div id='progressbar'>
-                            <div><span id='pointer'>&nbsp;</span></div>
-                        </div> -->
-
-                        <div class='controls'>
-                            <button id='prev' onclick="selected.playNext()"
-                                    class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                                <i class="zmdi zmdi-skip-previous"></i>
-                            </button>
-                            <button id='play' onclick="selected.play()"
-                                    class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                                <i class="zmdi zmdi-play"></i>
-                            </button>
-                            <button id='stop' onclick="selected.pause()"
-                                    class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                                <i class="zmdi zmdi-stop"></i>
-                            </button>
-                            <button id='next' onclick="selected.playNext()"
-                                    class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                                <i class="zmdi zmdi-skip-next"></i>
-                            </button>
-                        </div>
+                    <div id="time">
+                        <span id='elapsedtime' style="float:left;">00:00</span>
+                        <span id='totaltime' style="float:right;">00:00</span>
                     </div>
-                    <!-- UI -->
+
+                    <input class="mdl-slider mdl-js-slider"
+                           style="color:pink"
+                           type="range"
+                           min="0" max="100" value="0" tabindex="0" id="slider-circle">
+                    <!-- <div id='progressbar'>
+                        <div><span id='pointer'>&nbsp;</span></div>
+                    </div> -->
+
+                    <div class='controls'>
+                        <button id='prev' onclick="selected.playNext()"
+                                class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                            <i class="zmdi zmdi-skip-previous"></i>
+                        </button>
+                        <button id='play' onclick="selected.play()"
+                                class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                            <i class="zmdi zmdi-play"></i>
+                        </button>
+                        <button id='stop' onclick="selected.pause()"
+                                class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                            <i class="zmdi zmdi-stop"></i>
+                        </button>
+                        <button id='next' onclick="selected.playNext()"
+                                class="control mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                            <i class="zmdi zmdi-skip-next"></i>
+                        </button>
+                    </div>
                 </div>
+                <!-- UI -->
                 <!-- player -->
             </div>
         </div>
