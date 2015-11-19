@@ -11,6 +11,7 @@ if (Meteor.isClient) {
     var Selected = function () {
         this.audio = document.getElementById('audio');
         this.lyricContainer = document.getElementById('lyricContainer');
+        this.currentLine = document.getElementById('current_line');
         this.playlist = document.getElementById('playlist');
         this.currentIndex = 0;
         this.lyric = null;
@@ -61,6 +62,7 @@ if (Meteor.isClient) {
             //empty the lyric
             this.lyric = null;
             this.lyricContainer.textContent = 'loading...';
+            this.currentLine.textContent = 'loading...';
             this.lyricStyle = Math.floor(Math.random() * 4);
             this.audio.oncanplay = function () {
                 that.getLyric(that.audio.src.replace('.mp3', '-spanish.txt'));
@@ -68,18 +70,24 @@ if (Meteor.isClient) {
             };
             //sync the lyric
             this.audio.ontimeupdate = function (e) {
+                console.log("Sync lyrics ....")
                 if (!that.lyric) return;
                 for (var i = 0, l = that.lyric.length; i < l; i++) {
-                    if (this.currentTime > that.lyric[i][0] - 0.50 /*preload the lyric by 0.50s*/) {
+                    /*preload the lyric by 0.50s*/
+                    if (this.currentTime > that.lyric[i][0] - 0.50) {
                         //single line display mode
-                        // that.lyricContainer.textContent = that.lyric[i][1];
+                        that.lyricContainer.textContent = that.lyric[i][1];
+                        that.currentLine.textContent = that.lyric[i][1];
+                        console.log(that.lyricContainer.textContent);
                         //scroll mode
-                        var line = document.getElementById('line-' + i),
-                            prevLine = document.getElementById('line-' + (i > 0 ? i - 1 : i));
-                        prevLine.className = '';
-                        //randomize the color of the current line of the lyric
-                        line.className = 'current-line-' + that.lyricStyle;
-                        that.lyricContainer.style.top = 130 - line.offsetTop + 'px';
+                        //var line = document.getElementById('line-' + i),
+                        //    prevLine = document.getElementById('line-' + (i > 0 ? i - 1 : i));
+                        //    //prevLine.className = '';
+                        //console.log(line);
+                        //console.log(prevLine);
+                        ////randomize the color of the current line of the lyric
+                        //line.className = 'current-line-' + that.lyricStyle;
+                        //that.lyricContainer.style.top = 130 - line.offsetTop + 'px';
                     }
                 }
             };
@@ -95,7 +103,6 @@ if (Meteor.isClient) {
                 //play next index
                 that.currentIndex += 1;
             }
-            ;
             nextItem = allSongs[that.currentIndex].children[0];
             that.setClass(that.currentIndex);
             var songName = nextItem.getAttribute('data-name');
@@ -138,7 +145,6 @@ if (Meteor.isClient) {
             while (!pattern.test(lines[0])) {
                 lines = lines.slice(1);
             }
-            ;
 
             //remove the last empty item
             lines[lines.length - 1].length === 0 && lines.pop();
