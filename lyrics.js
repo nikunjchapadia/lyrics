@@ -37,9 +37,9 @@ if (Meteor.isClient) {
             this.audio.onended = function () {
                 that.playNext(that);
             }
-            this.audio.onerror = function (e) {
-                that.lyricContainer.textContent = '!fail to load the song :(';
-            };
+            // this.audio.onerror = function (e) {
+            //     that.lyricContainer.textContent = '!fail to load the song :(';
+            // };
 
             //enable keyboard control , spacebar to play and pause
             window.addEventListener('keydown', function (e) {
