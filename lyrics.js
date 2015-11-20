@@ -66,7 +66,7 @@ if (Meteor.isClient) {
                 }
             }, false);
 
-
+            that.adContainer.style.backgroundImage = "url('/ads/ad1.jpg')";
             var index = 1;
             setInterval(displayAd, 15000);
             function displayAd(){
