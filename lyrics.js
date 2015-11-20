@@ -31,7 +31,8 @@ if (Meteor.isClient) {
         this.currentIndex = 0;
         this.lyric = null;
         this.lyricStyle = 0; //random num to specify the different class name for lyric
-        this.songs = ['song1', 'song2', 'song3'];
+        this.currentSongIndex = 0;
+        this.songs = ['thislove-eng', 'thislove-spn', 'lmfao-eng', 'lmfao-spn'];
     };
     Selected.prototype = {
         constructor: Selected, //fix the prototype chain
@@ -137,7 +138,15 @@ if (Meteor.isClient) {
         },
         playNext: function (that) {
             console.log("dddddd");
-            var songName = "thislove-spn";
+            var songName = this.songs[this.currentSongIndex + 1];
+            this.currentSongIndex++;
+            if(this.currentSongIndex === 3){
+                this.currentIndex = 0;
+            }
+            console.log("songName", songName);
+            if(!songName){
+                songName = "thislove-eng";
+            }
             //var allSongs = this.playlist.children[0].children,
             //    nextItem;
             ////reaches the last song of the playlist?
