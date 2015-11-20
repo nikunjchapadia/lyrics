@@ -98,7 +98,7 @@ if (Meteor.isClient) {
             }
             var that = this;
             if (!songName) {
-                songName = 'lmfao-eng';
+                songName = 'thislove-eng';
             }
             this.audio.src = '/' + songName + '.mp3';
             //reset the position of the lyric container
@@ -121,7 +121,9 @@ if (Meteor.isClient) {
 
                 that.elapsedTimeContainer.innerHTML = that.secondsToString(elapsedTime);
                 that.totalTimeContainer.innerHTML = that.secondsToString(totalTime);
-                that.sliderCircle.style.left = percentPlayed + "%";
+                //that.sliderCircle.style.left = percentPlayed + "%";
+
+                $(that.sliderCircle).val(percentPlayed);
 
                 if (!that.lyric) return;
                 for (var i = 0, l = that.lyric.length; i < l; i++) {
