@@ -10,7 +10,6 @@ Router.route('/play/:_song', function () { 
         selected = new Selected(song);
         selected.init();
     });
-
  });
 
 if (Meteor.isClient) {
@@ -70,7 +69,7 @@ if (Meteor.isClient) {
             var index = 1;
             setInterval(displayAd, 15000);
             function displayAd(){
-                var ad = 'ads/ad' + index + '.jpg';
+                var ad = '/ads/ad' + index + '.jpg';
                 console.log("ad", ad);
                 that.adContainer.style.backgroundImage = "url(" + ad + ")";
                 index++;
