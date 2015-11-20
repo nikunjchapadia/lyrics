@@ -78,7 +78,7 @@ if (Meteor.isClient) {
                     index = 1;
                 }
             }
-            this.play(this.song);
+            this.play(this.song, true);
         },
         secondsToString: function (totalSeconds) {
             var minutes = Math.floor(totalSeconds / 60);
