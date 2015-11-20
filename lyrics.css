@@ -144,36 +144,52 @@ html, body {
 }
 
 .image1 {
-  background-image: url('/images/partyrock.jpg');
+  background-image: url('/images/maroon5.jpg');
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  height: 150px;
+  width: 100px;
 }
 .image2 {
   background-image: url('/images/roar.jpg');
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  height: 150px;
+  width: 100px;
 }
 .image3 {
-  background-image: url('/images/roar.jpg');
+  background-image: url('/images/jaiho.jpg');
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  height: 150px;
+  width: 100px;
 }
 .image4 {
-  background-image: url('/images/roar.jpg');
+  background-image: url('/images/partyrock.jpg');
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  height: 150px;
+  width: 100px;
 }
 .image5 {
-  background-image: url('/images/roar.jpg');
+  background-image: url('/images/gangnam.jpg');
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  height: 150px;
+  width: 100px;
 }
 .image6 {
-  background-image: url('/images/roar.jpg');
+  background-image: url('/images/wildestdreams.jpg');
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  height: 150px;
+  width: 100px;
 }
 
+.force-dims {
+  width: 100px !important;
+  margin: 0 20px 0 20px !important;
+}
 #lyricOuterContainer {
   overflow: hidden;
   margin-top: 25px;
