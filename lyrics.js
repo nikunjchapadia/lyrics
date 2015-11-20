@@ -13,11 +13,6 @@ Router.route('/play/:_song', function () { 
  });
 
 if (Meteor.isClient) {
-    //window.onload = function () {
-    //    selected = new Selected();
-    //    selected.init();
-    //};
-
     var Selected = function (songName) {
         this.song = songName;
         this.audio = document.getElementById('audio');
