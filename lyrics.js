@@ -69,7 +69,7 @@ if (Meteor.isClient) {
                 console.log("ad", ad);
                 that.adContainer.style.backgroundImage = "url(" + ad + ")";
                 index++;
-                if(index == 8){
+                if(index == 14){
                     index = 1;
                 }
             }
