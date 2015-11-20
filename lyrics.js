@@ -83,7 +83,7 @@ if (Meteor.isClient) {
             return minutes + ":" + secStr.substring(secStr.length - 2);
         },
         play: function (songName, playPause) {
-            // debugger;
+
             if (playPause) {
                 if ($("#play").hasClass('paused')) {
                     $("#play").removeClass('paused');
@@ -98,7 +98,6 @@ if (Meteor.isClient) {
                 songName = 'thislove-eng';
             }
 
-            debugger;
             if(songName !== this.currentSong) {
                 this.audio.src = '/' + songName + '.mp3';
                 this.currentSong = songName;
@@ -141,6 +140,7 @@ if (Meteor.isClient) {
             };
         },
         playNext: function (that) {
+            this.lyricContainer.style.top = '0px';
 
             var songName = this.songs[this.currentSongIndex + 1];
             this.currentSongIndex++;
