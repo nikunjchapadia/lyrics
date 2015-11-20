@@ -85,14 +85,16 @@ if (Meteor.isClient) {
             var secStr = "0" + seconds;
             return minutes + ":" + secStr.substring(secStr.length - 2);
         },
-        play: function (songName) {
-            //if($("#play").hasClass('paused')) {
-            //    $("#play").removeClass('paused');
-            //    this.pause();
-            //    return;
-            //} else {
-            //    $("#play").addClass('paused');
-            //}
+        play: function (songName, playPause) {
+            if (playPause) {
+                if ($("#play").hasClass('paused')) {
+                    $("#play").removeClass('paused');
+                    this.pause();
+                    return;
+                } else {
+                    $("#play").addClass('paused');
+                }
+            }
             var that = this;
             if (!songName) {
                 songName = 'lmfao-eng';
@@ -126,7 +128,6 @@ if (Meteor.isClient) {
                     if (this.currentTime > that.lyric[i][0] - 0.50) {
                         $('p', that.lyricContainer).removeClass('current');
                         $($('p', that.lyricContainer).get(i)).addClass('current');
-
                         if (i > 2) {
                             that.lyricContainer.style.top = (-29 * (i - 2)) + 'px';
                         }
@@ -151,7 +152,7 @@ if (Meteor.isClient) {
             //that.setClass(that.currentIndex);
             //var songName = nextItem.getAttribute('data-name');
             window.location.hash = songName;
-            this.play(songName);
+            this.play(songName,false);
         },
         pause : function(){
             this.audio.pause();
