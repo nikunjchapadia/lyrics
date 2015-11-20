@@ -28,6 +28,7 @@ if (Meteor.isClient) {
         this.lyricStyle = 0; //random num to specify the different class name for lyric
         this.currentSongIndex = 0;
         this.songs = ['thislove-eng', 'thislove-spn', 'lmfao-eng', 'lmfao-spn'];
+        this.currentSong = undefined;
     };
     Selected.prototype = {
         constructor: Selected, //fix the prototype chain
@@ -82,6 +83,7 @@ if (Meteor.isClient) {
             return minutes + ":" + secStr.substring(secStr.length - 2);
         },
         play: function (songName, playPause) {
+            // debugger;
             if (playPause) {
                 if ($("#play").hasClass('paused')) {
                     $("#play").removeClass('paused');
@@ -95,7 +97,15 @@ if (Meteor.isClient) {
             if (!songName) {
                 songName = 'thislove-eng';
             }
-            this.audio.src = '/' + songName + '.mp3';
+
+            debugger;
+            if(songName !== this.currentSong) {
+                this.audio.src = '/' + songName + '.mp3';
+                this.currentSong = songName;
+            } else {
+                this.audio.play();
+            }
+            
             //reset the position of the lyric container
             //this.lyricContainer.style.top = '130px';
             //empty the lyric
@@ -138,7 +148,7 @@ if (Meteor.isClient) {
                 this.currentSongIndex = 0;
             }
             console.log("songName", songName);
-            if(!songName){
+            if(!songName && !this.currentSong){
                 songName = "thislove-eng";
             }
             //var allSongs = this.playlist.children[0].children,
