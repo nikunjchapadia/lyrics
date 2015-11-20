@@ -98,12 +98,12 @@ if (Meteor.isClient) {
                 songName = 'thislove-eng';
             }
 
-            if(songName !== this.currentSong) {
+            //if(songName !== this.currentSong) {
                 this.audio.src = '/' + songName + '.mp3';
-                this.currentSong = songName;
-            } else {
-                this.audio.play();
-            }
+            //     this.currentSong = songName;
+            // } else {
+            //     this.audio.play();
+            // }
             
             //reset the position of the lyric container
             //this.lyricContainer.style.top = '130px';
