@@ -10,7 +10,6 @@ Router.route('/play/:_song', function () { 
         selected = new Selected(song);
         selected.init();
     });
-
  });
 
 if (Meteor.isClient) {
@@ -70,7 +69,7 @@ if (Meteor.isClient) {
             var index = 1;
             setInterval(displayAd, 15000);
             function displayAd(){
-                var ad = 'ads/ad' + index + '.jpg';
+                var ad = '/ads/ad' + index + '.jpg';
                 console.log("ad", ad);
                 that.adContainer.style.backgroundImage = "url(" + ad + ")";
                 index++;
@@ -86,14 +85,16 @@ if (Meteor.isClient) {
             var secStr = "0" + seconds;
             return minutes + ":" + secStr.substring(secStr.length - 2);
         },
-        play: function (songName) {
-            //if($("#play").hasClass('paused')) {
-            //    $("#play").removeClass('paused');
-            //    this.pause();
-            //    return;
-            //} else {
-            //    $("#play").addClass('paused');
-            //}
+        play: function (songName, playPause) {
+            if (playPause) {
+                if ($("#play").hasClass('paused')) {
+                    $("#play").removeClass('paused');
+                    this.pause();
+                    return;
+                } else {
+                    $("#play").addClass('paused');
+                }
+            }
             var that = this;
             if (!songName) {
                 songName = 'lmfao-eng';
@@ -127,7 +128,6 @@ if (Meteor.isClient) {
                     if (this.currentTime > that.lyric[i][0] - 0.50) {
                         $('p', that.lyricContainer).removeClass('current');
                         $($('p', that.lyricContainer).get(i)).addClass('current');
-
                         if (i > 2) {
                             that.lyricContainer.style.top = (-29 * (i - 2)) + 'px';
                         }
@@ -137,7 +137,7 @@ if (Meteor.isClient) {
         },
         playNext: function (that) {
             console.log("dddddd");
-            var songName = "lmfao-spn";
+            var songName = "thislove-spn";
             //var allSongs = this.playlist.children[0].children,
             //    nextItem;
             ////reaches the last song of the playlist?
@@ -152,7 +152,7 @@ if (Meteor.isClient) {
             //that.setClass(that.currentIndex);
             //var songName = nextItem.getAttribute('data-name');
             window.location.hash = songName;
-            this.play(songName);
+            this.play(songName,false);
         },
         pause : function(){
             this.audio.pause();
