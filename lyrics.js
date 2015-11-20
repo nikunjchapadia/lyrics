@@ -137,7 +137,7 @@ if (Meteor.isClient) {
         },
         playNext: function (that) {
             console.log("dddddd");
-            var songName = "lmfao-spn";
+            var songName = "thislove-spn";
             //var allSongs = this.playlist.children[0].children,
             //    nextItem;
             ////reaches the last song of the playlist?
