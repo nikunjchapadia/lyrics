@@ -143,6 +143,8 @@ body {
   margin: 0;
   margin-left: 20px;
   width: 250px;
+  position: relative;
+  top: 2px;
 }
 
 html, body {
@@ -272,5 +274,10 @@ html, body {
 .grid .cell .mdl-card {
   width: 400px;
   margin-bottom: 40px;
+  cursor: pointer;
+}
+
+#time {
+  color: #ffffff;
 }
 

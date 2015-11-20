@@ -105,8 +105,6 @@ if (Meteor.isClient) {
             //this.lyricContainer.style.top = '130px';
             //empty the lyric
             this.lyric = null;
-            //this.lyricContainer.textContent = 'loading...';
-            //this.currentLine.textContent = 'loading...';
             this.lyricStyle = Math.floor(Math.random() * 4);
             this.audio.oncanplay = function () {
                 that.getLyric(that.audio.src.replace('.mp3', '.lrc'));
@@ -121,7 +119,6 @@ if (Meteor.isClient) {
 
                 that.elapsedTimeContainer.innerHTML = that.secondsToString(elapsedTime);
                 that.totalTimeContainer.innerHTML = that.secondsToString(totalTime);
-                //that.sliderCircle.style.left = percentPlayed + "%";
 
                 $(that.sliderCircle).val(percentPlayed);
 
@@ -139,7 +136,7 @@ if (Meteor.isClient) {
             };
         },
         playNext: function (that) {
-            console.log("dddddd");
+
             var songName = this.songs[this.currentSongIndex + 1];
             this.currentSongIndex++;
             if(this.currentSongIndex === 3){
