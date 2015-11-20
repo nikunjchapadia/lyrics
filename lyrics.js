@@ -141,7 +141,7 @@ if (Meteor.isClient) {
             var songName = this.songs[this.currentSongIndex + 1];
             this.currentSongIndex++;
             if(this.currentSongIndex === 3){
-                this.currentIndex = 0;
+                this.currentSongIndex = 0;
             }
             console.log("songName", songName);
             if(!songName){
