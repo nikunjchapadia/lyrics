@@ -67,7 +67,7 @@ if (Meteor.isClient) {
             }, false);
 
             that.adContainer.style.backgroundImage = "url('/ads/ad1.jpg')";
-            var index = 1;
+            var index = 2;
             setInterval(displayAd, 15000);
             function displayAd(){
                 var ad = '/ads/ad' + index + '.jpg';
@@ -78,7 +78,7 @@ if (Meteor.isClient) {
                     index = 1;
                 }
             }
-            //this.play(this.song);
+            this.play(this.song);
         },
         secondsToString: function (totalSeconds) {
             var minutes = Math.floor(totalSeconds / 60);
